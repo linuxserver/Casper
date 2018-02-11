@@ -13,6 +13,8 @@
 
     {{!-- Styles'n'Scripts --}}
     <link rel="stylesheet" type="text/css" href="{{asset "built/screen.css"}}" />
+    <link rel="stylesheet" type="text/css" href="{{asset "built/lsio.css"}}" />
+    <link rel="stylesheet" type="text/css" href="{{asset "built/prism.css"}}" />
 
     {{!-- This tag outputs SEO meta+structured data and other important settings --}}
     {{ghost_head}}
@@ -62,6 +64,9 @@
         crossorigin="anonymous">
     </script>
     <script type="text/javascript" src="{{asset "js/jquery.fitvids.js"}}"></script>
+    <script type="text/javascript" src="{{asset "js/prism.js"}}"></script>
+    <script type="text/javascript" src="{{asset "ghostHunter/dist/jquery.ghosthunter.js"}}"></script>
+    <script type="text/javascript" src="{{asset "js/fontawesome-all.min.js"}}"></script>
 
     {{#if pagination.pages}}
     <script>
@@ -72,6 +77,58 @@
 
     {{!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. --}}
     {{{block "scripts"}}}
+
+    {{! If Piwik is the tracker of choice }}
+    <script type="text/javascript">
+
+        if (window.piwik_id && window.piwik_url) {
+            var _paq = _paq || [];
+
+            if (window.piwik_domains) {
+                _paq.push(["setDomains", window.piwik_domains]);
+            }
+
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+
+            (function() {
+                var u=window.piwik_url;
+                _paq.push(['setTrackerUrl', u+'piwik.php']);
+                _paq.push(['setSiteId', window.piwik_id]);
+                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+            })();
+        }
+    </script>
+
+    <script>
+
+        $("#search-field").on('keyup', function() {
+
+            if ($.trim($(this).val().length) > 0) {
+                $('#clear-search').show();
+            } else {
+                $('#clear-search').hide();
+            }
+        });
+
+        $(".search").on('blur', function() {
+            clearResults();
+            $('#clear-search').hide()
+        });
+
+        $('.search-fields').on('click', '#clear-search', function() {
+            $(this).hide();
+            clearResults();
+        });
+
+        function clearResults() {
+
+            $("#search-field").val('');
+            searchField.clear();
+        }
+
+    </script>
 
     {{!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag --}}
     {{ghost_foot}}

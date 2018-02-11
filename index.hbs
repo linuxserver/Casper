@@ -14,7 +14,19 @@ into the {body} of the default.hbs template --}}
                 {{/if}}
             </h1>
             <h2 class="site-description">{{@blog.description}}</h2>
+
+            {{! Searching }}
+            <div class="search">
+                <form>
+                    <div class="search-fields">
+                        <input placeholder="Search..." id="search-field" />
+                        <i class="fa fa-times-circle" id="clear-search"></i>
+                    </div>
+                </form>
+                <section id="results"></section>
+            </div>
         </div>
+
         {{> "site-nav"}}
     </div>
 </header>
